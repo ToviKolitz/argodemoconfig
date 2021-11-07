@@ -1,19 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: myapp
+  name: podinfo
+  namespace: default
 spec:
   selector:
     matchLabels:
-      app: myapp
-  replicas: 2
+      app: podinfo
   template:
     metadata:
       labels:
-        app: myapp
+        app: podinfo
     spec:
       containers:
-      - name: myapp
-        image: nanajanashia/argocd-app:1.2
-        ports:
-        - containerPort: 8080
+        - name: podinfod
+          image: ghcr.io/stefanprodan/podinfo:5.0.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 9898
+              protocol: TCP
